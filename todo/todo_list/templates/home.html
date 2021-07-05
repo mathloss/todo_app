@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Todo List{% endblock %}
+
+{% block content %}
+
+{% if messages %}
+	{% for message in messages %}
+		<div class="alert alert-warning alert-dismissible fade show" role="alert">
+			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			{{ message }}
+		</div>	
+		
+	{% endfor %}
+{% endif %}		
+	{% if les_items %}
+		<table class="table table-bordered">
+			{% for elements in les_items %}
+				{% if elements.completed %}
+					<tr class="table-secondary"> 
+						<td class="striker"><a href="{% url 'editer' elements.id %}" style="text-decoration:none"> {{ elements.item }}</a></td>
+						<td><center><a href="{% url 'decocher' elements.id %}"><button type="button" class="btn btn-outline-secondary">Décocher</button></center></a></td>
+						<td><center><a href="{% url 'delete' elements.id %}"><button type="button" class="btn btn-secondary">Effacer</button></a></center></td>
+					</tr>
+				{% else %}
+					<tr>
+						<td><a href="{% url 'editer' elements.id %}" style="text-decoration:none"> {{ elements.item }}</a></td>
+						<td><center><a href="{% url 'cocher' elements.id %}"><button type="button" class="btn btn-outline-secondary"> Cocher </button></center></a></td>
+						<td><center><a href="{% url 'delete' elements.id %}"><button type="button" class="btn btn-secondary">Effacer</button></center></td>
+					</tr>
+				{% endif %}
+			{% endfor%}
+		</table>
+	{% endif%}
+
+{% endblock %}
